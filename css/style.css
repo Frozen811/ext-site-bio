@@ -63,6 +63,52 @@ ul { list-style: none; }
     display: none;
 }
 
+/* --- СТАТУС-БАР IDE --- */
+.status-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 28px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+    z-index: 1000;
+}
+.status-left,
+.status-right {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* --- ДЕКОРАТИВНАЯ СЕТКА --- */
+.grid-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(var(--border-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: -1;
+}
+
 /* --- CUSTOM SCROLLBAR --- */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-main); }
@@ -71,7 +117,11 @@ ul { list-style: none; }
 
 /* --- HEADER --- */
 header {
-    position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+    position: fixed; 
+    top: 28px; /* Отступ под статус-бар */
+    left: 0; 
+    width: 100%; 
+    z-index: 100;
     background: rgba(10, 10, 10, 0.85);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -122,9 +172,22 @@ nav a:hover::after { width: 100%; }
 
 /* --- HERO SECTION --- */
 .hero-section {
-    padding: 160px 0 100px;
+    padding: 180px 0 100px; /* Увеличен отступ под статус-бар */
     min-height: 80vh;
-    display: flex; align-items: center; justify-content: center;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+/* Рамка вокруг hero-контента */
+.hero-frame {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 60px 40px;
+    background: rgba(10, 10, 10, 0.3);
+    backdrop-filter: blur(10px);
+    max-width: 1200px;
+    margin: 0 auto;
 }
 .hero-grid { display: flex; align-items: center; justify-content: center; width: 100%; }
 .hero-text { max-width: 800px; text-align: center; }
@@ -149,18 +212,6 @@ nav a:hover::after { width: 100%; }
     color: var(--text-primary);
     display: inline-block;
     letter-spacing: 4px;
-    position: relative;
-}
-/* Тонкая декоративная линия сверху */
-.main-title::before {
-    content: '';
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 2px;
-    background: var(--text-primary);
 }
 
 /* Курсор удален для чистоты дизайна */
@@ -209,11 +260,37 @@ nav a:hover::after { width: 100%; }
     padding: 0 20px;
 }
 
+/* --- TECH STACK ICONS --- */
+.tech-icons {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin: 30px 0;
+}
+.tech-icon {
+    width: 50px;
+    height: 50px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+    background: var(--bg-secondary);
+}
+.tech-icon:hover {
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+    transform: translateY(-5px);
+}
+
 .hero-btns { 
     display: flex; 
     gap: 20px; 
     justify-content: center;
-    margin-top: 50px;
+    margin-top: 40px;
 }
 .btn {
     padding: 15px 35px; 
@@ -513,6 +590,82 @@ section { padding: 80px 0; }
 }
 
 /* --- FOOTER --- */
+/* --- СЧЕТЧИКИ СТАТИСТИКИ --- */
+.stats-grid {
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    margin: 50px 0 40px;
+    padding: 40px 0;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+.stat-item {
+    text-align: center;
+}
+.stat-number {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: var(--font-head);
+    margin-bottom: 8px;
+}
+.stat-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: var(--font-mono);
+}
+
+/* --- ТЕРМИНАЛ БЛОК --- */
+.terminal-block {
+    max-width: 600px;
+    margin: 40px auto 0;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--bg-main);
+    overflow: hidden;
+}
+.terminal-header {
+    background: var(--bg-secondary);
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+.terminal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--border-color);
+}
+.terminal-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-left: auto;
+}
+.terminal-body {
+    padding: 20px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+}
+.terminal-line {
+    margin-bottom: 8px;
+}
+.terminal-prompt {
+    color: var(--text-primary);
+    margin-right: 8px;
+}
+.terminal-command {
+    color: var(--text-primary);
+}
+.terminal-output {
+    color: var(--text-secondary);
+}
+
 footer { 
     padding: 40px 0; 
     border-top: 1px solid var(--border-color); 
@@ -575,8 +728,16 @@ footer {
     nav ul { flex-direction: column; align-items: center; gap: 30px; }
     nav a { font-size: 20px; }
 
-    .hero-section { text-align: center; padding-top: 120px; }
+    .status-bar { font-size: 9px; padding: 0 10px; }
+    .status-left, .status-right { gap: 8px; }
+    .hero-frame { padding: 30px 20px; }
+    .hero-section { text-align: center; padding-top: 140px; }
     .main-title { font-size: 48px; }
+    .stats-grid { gap: 30px; flex-wrap: wrap; }
+    .stat-number { font-size: 36px; }
+    .tech-icons { gap: 20px; }
+    .tech-icon { width: 40px; height: 40px; font-size: 20px; }
+    .terminal-block { margin: 30px 20px; }
     .footer-content { flex-direction: column; gap: 15px; }
     .contact-card { width: 100%; }
 

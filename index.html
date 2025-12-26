@@ -42,6 +42,22 @@
 <canvas id="matrixCanvas"></canvas>
 <div class="noise-bg"></div>
 
+<!-- Статус-бар IDE/Терминал -->
+<div class="status-bar">
+  <div class="status-left">
+    <span class="status-item"><i class="fas fa-circle" style="font-size: 8px; color: #4ade80;"></i> Online</span>
+    <span class="status-item">~/portfolio</span>
+  </div>
+  <div class="status-right">
+    <span class="status-item">Java 17</span>
+    <span class="status-item">UTF-8</span>
+    <span class="status-item">Ln 1, Col 1</span>
+  </div>
+</div>
+
+<!-- Декоративная сетка на фоне -->
+<div class="grid-overlay"></div>
+
 <header>
   <div class="container header-content">
     <a href="#" class="logo">
@@ -64,26 +80,76 @@
 
 <main>
 <section id="hero" class="hero-section">
-  <div class="container hero-grid">
-    <div class="hero-text">
-      <p class="greeting reveal">Hello, world.</p>
+  <div class="hero-frame">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <p class="greeting reveal">Hello, world.</p>
 
-      <h1 class="main-title reveal delay-1">EXTREME</h1>
+        <h1 class="main-title reveal delay-1">EXTREME</h1>
 
-      <h2 class="subtitle reveal delay-2">
-        <span class="typing-text"></span>
-      </h2>
+        <h2 class="subtitle reveal delay-2">
+          <span class="typing-text"></span>
+        </h2>
 
-      <p class="description reveal delay-3">
-        Java моя жизнь.
-      </p>
+        <p class="description reveal delay-3">
+          Java моя жизнь.
+        </p>
 
-      <div class="hero-btns reveal delay-4">
-        <a href="about.html" class="btn btn-filled">Обо мне</a>
-        <a href="contacts.html" class="btn btn-outline">Написать</a>
+        <!-- Tech Stack Icons -->
+        <div class="tech-icons reveal delay-3">
+          <div class="tech-icon" title="Java">
+            <i class="fab fa-java"></i>
+          </div>
+          <div class="tech-icon" title="Python">
+            <i class="fab fa-python"></i>
+          </div>
+          <div class="tech-icon" title="Linux">
+            <i class="fab fa-linux"></i>
+          </div>
+        </div>
+
+        <div class="hero-btns reveal delay-4">
+          <a href="about.html" class="btn btn-filled">Обо мне</a>
+          <a href="contacts.html" class="btn btn-outline">Написать</a>
+        </div>
+
+        <!-- Счетчики статистики -->
+        <div class="stats-grid reveal delay-4">
+          <div class="stat-item">
+            <div class="stat-number">2+</div>
+            <div class="stat-label">Years</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">2</div>
+            <div class="stat-label">Projects</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">2</div>
+            <div class="stat-label">Works</div>
+          </div>
+        </div>
+
+        <!-- Терминал-блок -->
+        <div class="terminal-block reveal delay-4">
+          <div class="terminal-header">
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+            <span class="terminal-title">bash</span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line">
+              <span class="terminal-prompt">$</span>
+              <span class="terminal-command">whoami</span>
+            </div>
+            <div class="terminal-line">
+              <span class="terminal-output">> extreme --role=developer --stack=java,python</span>
+            </div>
+          </div>
+        </div>
       </div>
+      <div class="hero-visual"></div>
     </div>
-    <div class="hero-visual"></div>
   </div>
 </section>
 </main>

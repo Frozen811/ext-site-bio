@@ -37,8 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.opacity = '1';
   }, 50);
 
-  // Заголовок отображается статично для профессионального вида
-
   // 1. Мобильное меню
   const menuBtn = document.getElementById('menuBtn');
   const navMenu = document.getElementById('navMenu');
@@ -77,30 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 3. Простая смена текста (профессиональный стиль)
+  // 3. Статичный подзаголовок (минимализм)
   const textElement = document.querySelector('.typing-text');
-  const phrases = [
-    'Java Developer',
-    'Python Developer',
-    'Software Engineer',
-    'Backend Specialist',
-  ];
-
   if (textElement) {
-    let counter = 0;
-    function changeText() {
-      textElement.style.opacity = '0';
-      setTimeout(() => {
-        textElement.textContent = phrases[counter];
-        textElement.style.opacity = '1';
-        counter = (counter + 1) % phrases.length;
-      }, 300);
-    }
-    // Устанавливаем начальный текст
-    textElement.textContent = phrases[0];
-    textElement.style.transition = 'opacity 0.3s ease';
-    // Меняем текст каждые 3 секунды
-    setInterval(changeText, 3000);
+    textElement.textContent = 'Java Developer';
   }
 
   // 4. Копирование ников
@@ -135,114 +113,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 6. Digital Rain - Optimized with reduced complexity
-  const canvas = document.getElementById('matrixCanvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d', { alpha: false });
-    let width, height;
-
-    const katakana = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ';
-    const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const nums = '0123456789';
-    const chars = katakana + latin + nums;
-    const specialWords = ['EXTR3ME', 'JAVA', 'YOON', 'CODE'];
-    const fontSize = 14;
-    let columns;
-    let drops = [];
-    let columnState = [];
-
-    function resizeCanvas() {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-      columns = Math.floor(width / fontSize);
-
-      const newDrops = [];
-      const newColumnState = [];
-      for (let i = 0; i < columns; i++) {
-        newDrops[i] = drops[i] || Math.random() * -100;
-        newColumnState[i] = columnState[i] || { active: false, word: '', index: 0 };
-      }
-      drops = newDrops;
-      columnState = newColumnState;
-    }
-
-    const debouncedResize = throttle(resizeCanvas, 250);
-    window.addEventListener('resize', debouncedResize, { passive: true });
-    resizeCanvas();
-
-    let lastTime = 0;
-    const fps = 20; // Reduced from 24 for better performance
-    const interval = 1000 / fps;
-
-    let animationFrameId;
-    
-    function drawMatrix(currentTime) {
-      animationFrameId = requestAnimationFrame(drawMatrix);
-      if (!currentTime) currentTime = performance.now();
-      const deltaTime = currentTime - lastTime;
-      if (deltaTime < interval) return;
-      lastTime = currentTime - (deltaTime % interval);
-
-      ctx.fillStyle = 'rgba(10, 10, 10, 0.08)';
-      ctx.fillRect(0, 0, width, height);
-      ctx.font = `${fontSize}px 'JetBrains Mono', monospace`;
-
-      for (let i = 0; i < drops.length; i++) {
-        let text;
-        let isSpecial = false;
-
-        if (columnState[i] && columnState[i].active) {
-          text = columnState[i].word[columnState[i].index];
-          isSpecial = true;
-          columnState[i].index++;
-          if (columnState[i].index >= columnState[i].word.length) {
-            columnState[i].active = false;
-          }
-        } else if (Math.random() < 0.001) { // Reduced frequency for performance
-          const word = specialWords[Math.floor(Math.random() * specialWords.length)];
-          columnState[i].active = true;
-          columnState[i].word = word;
-          columnState[i].index = 0;
-          text = columnState[i].word[columnState[i].index];
-          isSpecial = true;
-          columnState[i].index++;
-        } else {
-          text = chars[Math.floor(Math.random() * chars.length)];
-        }
-
-        if (isSpecial) {
-          ctx.shadowBlur = 8; // Reduced from 10
-          ctx.shadowColor = 'rgba(255, 255, 255, 0.4)';
-          ctx.fillStyle = '#ffffff';
-        } else {
-          ctx.shadowBlur = 0;
-          const isWhite = Math.random() > 0.99;
-          ctx.fillStyle = isWhite ? '#bbbbbb' : '#333333';
-        }
-
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > height && Math.random() > 0.98) {
-          drops[i] = 0;
-          if (columnState[i]) columnState[i].active = false;
-        }
-        drops[i]++;
-      }
-    }
-    
-    // Pause animation when page is hidden for performance
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        cancelAnimationFrame(animationFrameId);
-      } else {
-        animationFrameId = requestAnimationFrame(drawMatrix);
-      }
-    }, { passive: true });
-    
-    requestAnimationFrame(drawMatrix);
-  }
+  // 6. Матрица отключена для чистого дизайна
+  // Canvas скрыт через CSS (display: none)
 
   // --- 7. PAGE TRANSITIONS (SMOOTH NAVIGATION) ---
   // Intercept all internal links for smooth page transitions

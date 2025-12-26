@@ -1,12 +1,12 @@
-/* --- ПАЛИТРА (HIGH-TECH PROFESSIONAL) --- */
+/* --- ПАЛИТРА (PURE MONOCHROME) --- */
 :root {
-    --bg-main: #0b0b0f;
-    --bg-secondary: #11151c;
+    --bg-main: #050505;
+    --bg-secondary: #0a0a0a;
     --text-primary: #ffffff;
-    --text-secondary: #94a3b8;
-    --accent: #2563eb;
-    --accent-light: #60a5fa;
-    --border-color: #1e293b;
+    --text-secondary: #888888;
+    --accent: #ffffff;
+    --accent-soft: #e5e5e5;
+    --border-color: #222222;
 
     --font-head: 'Inter', sans-serif;
     --font-body: 'Inter', sans-serif;
@@ -57,22 +57,10 @@ a { text-decoration: none; color: inherit; transition: 0.3s; }
 ul { list-style: none; }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 30px; }
 
-/* Убираем шум для чистого дизайна */
-.noise-bg {
-    display: none;
-}
-
-/* Матрица на фоне - очень тонкая и ненавязчивая */
+/* Убираем все декоративные эффекты для чистоты */
+.noise-bg,
 #matrixCanvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    opacity: 0.05;
-    contain: strict;
-    pointer-events: none;
+    display: none;
 }
 
 /* --- CUSTOM SCROLLBAR --- */
@@ -93,32 +81,41 @@ header {
 }
 .header-content { display: flex; justify-content: space-between; align-items: center; }
 
-/* Логотип - чистый и профессиональный */
+/* Логотип - минималистичный */
 .logo {
     font-family: var(--font-head);
-    font-weight: 700;
+    font-weight: 600;
     font-size: 24px;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     position: relative;
     transition: color 0.3s ease;
     display: inline-block;
 }
-.dot { color: var(--accent); }
+.dot { color: var(--text-secondary); }
 
 .logo:hover {
-    color: var(--accent-light);
+    color: var(--accent-soft);
 }
 
 nav ul { display: flex; gap: 40px; }
 nav a {
-    font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); font-weight: 500;
+    font-size: 14px; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+    color: var(--text-secondary); 
+    font-weight: 500;
     position: relative;
     transition: color 0.3s ease;
 }
-nav a:hover { color: var(--accent-light); }
+nav a:hover { color: var(--text-primary); }
 nav a::after {
-    content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
-    background: linear-gradient(90deg, var(--accent), var(--accent-light)); 
+    content: ''; 
+    position: absolute; 
+    bottom: -5px; 
+    left: 0; 
+    width: 0; 
+    height: 1px;
+    background: var(--text-primary); 
     transition: width 0.3s ease;
 }
 nav a:hover::after { width: 100%; }
@@ -135,27 +132,24 @@ nav a:hover::after { width: 100%; }
 
 .greeting { color: var(--text-secondary); font-family: var(--font-mono); margin-bottom: 15px; }
 
-/* --- ГЛАВНЫЙ ЗАГОЛОВОК (ПРОФЕССИОНАЛЬНЫЙ ГРАДИЕНТ) --- */
+/* --- ГЛАВНЫЙ ЗАГОЛОВОК (ЧИСТЫЙ И ЧЕТКИЙ) --- */
 .main-title {
     font-family: var(--font-head);
     font-size: 90px;
-    font-weight: 800;
+    font-weight: 700;
     line-height: 1;
     margin-bottom: 20px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-light));
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
+    color: var(--text-primary);
     display: inline-block;
 }
 
-/* Убираем мигающий курсор для профессионального вида */
+/* Курсор удален для чистоты дизайна */
 
-/* --- ПОДЗАГОЛОВОК (ПРОФЕССИОНАЛЬНЫЙ СТИЛЬ) --- */
+/* --- ПОДЗАГОЛОВОК (МИНИМАЛИСТИЧНЫЙ) --- */
 .subtitle {
     font-size: 24px;
-    font-weight: 500;
-    color: var(--accent-light);
+    font-weight: 400;
+    color: var(--text-secondary);
     margin-bottom: 30px;
     min-height: 40px;
     font-family: var(--font-body);
@@ -171,36 +165,40 @@ nav a:hover::after { width: 100%; }
 
 .hero-btns { display: flex; gap: 20px; justify-content: center; }
 .btn {
-    padding: 15px 35px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
-    border-radius: 12px; transition: all 0.3s ease; font-size: 14px; cursor: pointer;
+    padding: 15px 35px; 
+    font-weight: 600; 
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    border-radius: 4px; 
+    transition: all 0.3s ease; 
+    font-size: 14px; 
+    cursor: pointer;
     font-family: var(--font-body);
-    will-change: background-color, color, border-color, transform;
 }
 .btn-filled { 
-    background: var(--accent); 
-    color: #ffffff; 
-    border: 1px solid var(--accent); 
+    background: var(--text-primary); 
+    color: var(--bg-main); 
+    border: 1px solid var(--text-primary); 
 }
 .btn-filled:hover { 
-    background: var(--accent-light); 
-    border-color: var(--accent-light);
-    transform: translateY(-3px);
+    background: var(--accent-soft);
+    border-color: var(--accent-soft);
 }
 .btn-filled:active {
-    transform: translateY(-1px);
+    transform: scale(0.98);
 }
 .btn-outline { 
     background: transparent; 
-    color: var(--accent); 
+    color: var(--text-primary); 
     border: 1px solid var(--border-color); 
 }
 .btn-outline:hover { 
-    border-color: var(--accent); 
-    background: rgba(37, 99, 235, 0.1);
-    transform: translateY(-3px);
+    background: var(--text-primary);
+    color: var(--bg-main);
+    border-color: var(--text-primary);
 }
 .btn-outline:active {
-    transform: translateY(-1px);
+    transform: scale(0.98);
 }
 
 /* --- SECTIONS --- */
@@ -208,16 +206,13 @@ section { padding: 80px 0; }
 .section-heading {
     font-family: var(--font-head); 
     font-size: 28px; 
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase; 
     letter-spacing: 2px;
     text-align: center; 
     margin-bottom: 60px; 
     position: relative;
-    background: linear-gradient(135deg, var(--accent), var(--accent-light));
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
+    color: var(--text-primary);
 }
 .section-heading::after {
     content: ''; 
@@ -226,18 +221,18 @@ section { padding: 80px 0; }
     left: 50%; 
     transform: translateX(-50%);
     width: 60px; 
-    height: 3px; 
-    background: linear-gradient(90deg, var(--accent), var(--accent-light));
-    border-radius: 2px;
+    height: 2px; 
+    background: var(--text-primary);
 }
 
 /* --- DOSSIER CARD --- */
 .dossier-card {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
-    display: flex; flex-direction: column;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    border-radius: 8px;
+    display: flex; 
+    flex-direction: column;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
     overflow: hidden;
     max-width: 1000px;
     margin: 0 auto;
@@ -245,7 +240,7 @@ section { padding: 80px 0; }
 }
 .dossier-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(37, 99, 235, 0.2);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.7);
 }
 
 .dossier-banner { 
@@ -300,7 +295,7 @@ section { padding: 80px 0; }
 .tech-item {
     background: var(--bg-main); 
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 4px;
     padding: 12px; 
     font-family: var(--font-body); 
     font-size: 14px;
@@ -311,9 +306,8 @@ section { padding: 80px 0; }
     transition: all 0.3s ease;
 }
 .tech-item:hover { 
-    border-color: var(--accent);
-    background: rgba(37, 99, 235, 0.1);
-    transform: translateY(-3px);
+    border-color: var(--text-primary);
+    background: var(--bg-secondary);
 }
 
 .dossier-info { flex-grow: 1; }
@@ -323,10 +317,7 @@ section { padding: 80px 0; }
     font-weight: 700;
     line-height: 1; 
     margin-bottom: 5px;
-    background: linear-gradient(135deg, var(--text-primary), var(--accent-light));
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
+    color: var(--text-primary);
 }
 .aka { color: var(--text-secondary); font-family: var(--font-mono); margin-bottom: 30px; }
 .crossed { text-decoration: line-through; opacity: 0.6; }
@@ -337,10 +328,10 @@ section { padding: 80px 0; }
     font-size: 12px; 
     text-transform: uppercase; 
     letter-spacing: 1px; 
-    color: var(--accent); 
+    color: var(--text-secondary); 
     margin-bottom: 5px; 
-    font-family: var(--font-body);
-    font-weight: 600;
+    font-family: var(--font-mono);
+    font-weight: 500;
 }
 .data-value { 
     font-size: 18px; 
@@ -351,32 +342,28 @@ section { padding: 80px 0; }
 .quote { 
     font-style: italic; 
     color: var(--text-secondary); 
-    border-left: 3px solid var(--accent); 
+    border-left: 2px solid var(--text-primary); 
     padding-left: 20px; 
     margin-bottom: 30px;
-    background: rgba(37, 99, 235, 0.05);
-    padding: 15px 20px;
-    border-radius: 8px;
 }
 
 .tags-list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; margin-bottom: 30px; }
 .tag {
-    font-family: var(--font-body); 
+    font-family: var(--font-mono); 
     font-size: 13px; 
     color: var(--text-secondary);
     padding: 6px 14px; 
     border: 1px solid var(--border-color); 
-    background: rgba(37, 99, 235, 0.05);
-    border-radius: 6px;
+    background: var(--bg-secondary);
+    border-radius: 4px;
     cursor: pointer; 
     position: relative; 
     transition: all 0.3s ease;
 }
 .tag:hover { 
-    border-color: var(--accent); 
-    color: var(--accent-light);
-    background: rgba(37, 99, 235, 0.15);
-    transform: translateY(-2px);
+    border-color: var(--text-primary); 
+    color: var(--text-primary);
+    background: var(--bg-main);
 }
 .tag::after {
     content: 'Copied!'; position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
@@ -386,9 +373,9 @@ section { padding: 80px 0; }
 .tag.copied::after { opacity: 1; top: -25px; }
 
 .status-box { 
-    background: rgba(37, 99, 235, 0.05); 
+    background: var(--bg-main); 
     padding: 15px; 
-    border-radius: 8px; 
+    border-radius: 4px; 
     display: flex; 
     align-items: center; 
     gap: 15px; 
@@ -396,7 +383,9 @@ section { padding: 80px 0; }
     color: var(--text-secondary); 
     border: 1px solid var(--border-color); 
 }
-.status-box i { color: var(--accent); }
+.status-box i { 
+    color: var(--text-primary); 
+}
 
 /* --- CONTACTS --- */
 .contact-links { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
@@ -404,45 +393,72 @@ section { padding: 80px 0; }
     background: var(--bg-secondary); 
     border: 1px solid var(--border-color);
     padding: 30px 60px; 
-    border-radius: 12px; 
+    border-radius: 4px; 
     display: flex; 
     flex-direction: column; 
     align-items: center; 
     gap: 15px; 
     transition: all 0.3s ease;
 }
-.contact-card i { font-size: 32px; color: var(--accent); transition: all 0.3s ease; }
-.contact-card span { font-family: var(--font-body); font-size: 14px; transition: all 0.3s ease; color: var(--text-secondary); }
-.contact-card:hover { 
-    border-color: var(--accent); 
-    background: rgba(37, 99, 235, 0.1);
-    transform: translateY(-5px);
+.contact-card i { 
+    font-size: 32px; 
+    color: var(--text-secondary); 
+    transition: all 0.3s ease; 
 }
-.contact-card:hover i { color: var(--accent-light); transform: scale(1.1); }
-.contact-card:hover span { color: var(--text-primary); }
+.contact-card span { 
+    font-family: var(--font-body); 
+    font-size: 14px; 
+    transition: all 0.3s ease; 
+    color: var(--text-secondary); 
+}
+.contact-card:hover { 
+    background: var(--text-primary);
+    border-color: var(--text-primary);
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+.contact-card:hover i { 
+    color: var(--bg-main); 
+}
+.contact-card:hover span { 
+    color: var(--bg-main); 
+}
 
 /* --- BUTTON UP --- */
 .scroll-top {
-    position: fixed; bottom: 30px; right: 30px;
-    background: var(--accent); 
-    border: 1px solid var(--accent);
-    width: 50px; height: 50px; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; opacity: 0; pointer-events: none; transition: all 0.3s ease; z-index: 99;
-    color: #ffffff;
+    position: fixed; 
+    bottom: 30px; 
+    right: 30px;
+    background: var(--bg-secondary); 
+    border: 1px solid var(--border-color);
+    width: 50px; 
+    height: 50px; 
+    border-radius: 4px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    cursor: pointer; 
+    opacity: 0; 
+    pointer-events: none; 
+    transition: all 0.3s ease; 
+    z-index: 99;
+    color: var(--text-primary);
 }
-.scroll-top.visible { opacity: 1; pointer-events: auto; }
+.scroll-top.visible { 
+    opacity: 1; 
+    pointer-events: auto; 
+}
 .scroll-top:hover { 
-    background: var(--accent-light); 
-    border-color: var(--accent-light);
-    transform: translateY(-5px); 
+    background: var(--text-primary); 
+    color: var(--bg-main);
+    border-color: var(--text-primary);
 }
 .scroll-top:focus {
-    outline: 2px solid var(--accent-light);
+    outline: 2px solid var(--text-primary);
     outline-offset: 2px;
 }
 .scroll-top:active {
-    transform: translateY(-2px);
+    transform: scale(0.95);
 }
 
 /* --- FOOTER --- */

@@ -32,86 +32,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 3. Эффект "Декодирования" (Scramble Text)
-  class TextScramble {
-    constructor(el) {
-      this.el = el;
-      // Символы, которые мелькают при подборе
-      this.chars = '!<>-_\\/[]{}—=+*^?#________';
-      this.update = this.update.bind(this);
-    }
-
-    setText(newText) {
-      const oldText = this.el.innerText;
-      const length = Math.max(oldText.length, newText.length);
-      const promise = new Promise((resolve) => (this.resolve = resolve));
-      this.queue = [];
-      for (let i = 0; i < length; i++) {
-        const from = oldText[i] || '';
-        const to = newText[i] || '';
-        const start = Math.floor(Math.random() * 40);
-        const end = start + Math.floor(Math.random() * 40);
-        this.queue.push({ from, to, start, end });
-      }
-      cancelAnimationFrame(this.frameRequest);
-      this.frame = 0;
-      this.update();
-      return promise;
-    }
-
-    update() {
-      let output = '';
-      let complete = 0;
-      for (let i = 0, n = this.queue.length; i < n; i++) {
-        let { from, to, start, end, char } = this.queue[i];
-        if (this.frame >= end) {
-          complete++;
-          output += to;
-        } else if (this.frame >= start) {
-          if (!char || Math.random() < 0.28) {
-            char = this.randomChar();
-            this.queue[i].char = char;
-          }
-          // Окрашиваем случайные символы в серый для эффекта
-          output += `<span style="color: #555;">${char}</span>`;
-        } else {
-          output += from;
-        }
-      }
-      this.el.innerHTML = output;
-      if (complete === this.queue.length) {
-        this.resolve();
-      } else {
-        this.frameRequest = requestAnimationFrame(this.update);
-        this.frame++;
-      }
-    }
-
-    randomChar() {
-      return this.chars[Math.floor(Math.random() * this.chars.length)];
-    }
-  }
-
-  // Настройка фраз и запуск
+  // 3. Эффект печатания (Typewriter Effect)
+  const textElement = document.querySelector('.typing-text');
   const phrases = [
     'Java Developer',
     'Python Developer',
     'ya lublu standoff',
     'Yoon bratochek',
   ];
+  let phraseIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  let typeSpeed = 100;
+  let backSpeed = 50;
+  let backDelay = 2000; // Пауза перед удалением
 
-  const el = document.querySelector('.typing-text');
-  if (el) {
-    const fx = new TextScramble(el);
-    let counter = 0;
-    const next = () => {
-      fx.setText(phrases[counter]).then(() => {
-        setTimeout(next, 2500); // Пауза 2.5 секунды перед сменой
-      });
-      counter = (counter + 1) % phrases.length;
-    };
-    next();
+  function typeEffect() {
+    if (!textElement) return;
+
+    const currentPhrase = phrases[phraseIndex];
+
+    if (isDeleting) {
+      charIndex--;
+      textElement.textContent = currentPhrase.substring(0, charIndex);
+    } else {
+      charIndex++;
+      textElement.textContent = currentPhrase.substring(0, charIndex);
+    }
+
+    let delta = isDeleting ? backSpeed : typeSpeed;
+
+    if (!isDeleting && charIndex === currentPhrase.length) {
+      // Закончили печатать фразу
+      delta = backDelay; // Ждем перед удалением
+      isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+      // Закончили удалять фразу
+      isDeleting = false;
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      delta = 500; // Пауза перед началом новой фразы
+    }
+
+    setTimeout(typeEffect, delta);
   }
+
+  // Запуск эффекта
+  typeEffect();
 
   // 4. Копирование ников (тегов) по клику
   document.querySelectorAll('.tag').forEach((tag) => {
@@ -140,4 +106,66 @@ document.addEventListener('DOMContentLoaded', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
+
+  // 6. Digital Rain (Matrix Effect) - Monochrome Noir
+  const canvas = document.getElementById('matrixCanvas');
+  const ctx = canvas.getContext('2d');
+
+  let width, height;
+
+
+
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
+  const fontSize = 14;
+  let columns;
+  let drops = [];
+
+  function resizeCanvas() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    columns = Math.floor(width / fontSize);
+    // Re-initialize drops if needed, or just extend/truncate
+    // For simplicity, we can preserve existing drops and add new ones if width increases
+    const newDrops = [];
+    for (let i = 0; i < columns; i++) {
+      newDrops[i] = drops[i] || Math.random() * -100;
+    }
+    drops = newDrops;
+  }
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function drawMatrix() {
+    // Полупрозрачный черный фон для следа
+    ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.font = `${fontSize}px 'JetBrains Mono', monospace`;
+
+    for (let i = 0; i < drops.length; i++) {
+      // Случайный символ
+      const text = chars[Math.floor(Math.random() * chars.length)];
+
+      // Цвет: темно-серый, иногда белый
+      const isWhite = Math.random() > 0.98;
+      ctx.fillStyle = isWhite ? '#ffffff' : '#444444';
+
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+      // Сброс капли или падение
+      if (drops[i] * fontSize > height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+
+      drops[i]++;
+    }
+
+    requestAnimationFrame(drawMatrix);
+  }
+
+  drawMatrix();
 });

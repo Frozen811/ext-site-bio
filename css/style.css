@@ -33,6 +33,16 @@ ul { list-style: none; }
     pointer-events: none; z-index: -1; opacity: 0.4;
 }
 
+#matrixCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.3; /* Легкая прозрачность, чтобы не мешать контенту */
+}
+
 /* --- CUSTOM SCROLLBAR --- */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-main); }

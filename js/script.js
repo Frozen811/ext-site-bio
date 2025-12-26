@@ -32,7 +32,65 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 3. Эффект печатания (Typewriter Effect)
+  // 3. Эффект декодера (Matrix Decoder Effect)
+  class TextScramble {
+    constructor(el) {
+      this.el = el;
+      this.chars = '!<>-_\\/[]{}—=+*^?#';
+      this.update = this.update.bind(this);
+    }
+
+    setText(newText) {
+      const oldText = this.el.innerText;
+      const length = Math.max(oldText.length, newText.length);
+      const promise = new Promise((resolve) => (this.resolve = resolve));
+      this.queue = [];
+      for (let i = 0; i < length; i++) {
+        const from = oldText[i] || '';
+        const to = newText[i] || '';
+        const start = Math.floor(Math.random() * 60); // Увеличил для замедления
+        const end = start + Math.floor(Math.random() * 60);
+        this.queue.push({ from, to, start, end });
+      }
+      cancelAnimationFrame(this.frameRequest);
+      this.frame = 0;
+      this.update();
+      return promise;
+    }
+
+    update() {
+      let output = '';
+      let complete = 0;
+      for (let i = 0, n = this.queue.length; i < n; i++) {
+        let { from, to, start, end, char } = this.queue[i];
+        if (this.frame >= end) {
+          complete++;
+          output += to;
+        } else if (this.frame >= start) {
+          if (!char || Math.random() < 0.28) {
+            char = this.randomChar();
+            this.queue[i].char = char;
+          }
+          // Темно-серый для случайных символов
+          output += `<span style="color: #444444;">${char}</span>`;
+        } else {
+          output += from;
+        }
+      }
+      this.el.innerHTML = output;
+      if (complete === this.queue.length) {
+        this.resolve();
+      } else {
+        this.frameRequest = requestAnimationFrame(this.update);
+        this.frame++;
+      }
+    }
+
+    randomChar() {
+      return this.chars[Math.floor(Math.random() * this.chars.length)];
+    }
+  }
+
   const textElement = document.querySelector('.typing-text');
   const phrases = [
     'Java Developer',
@@ -40,44 +98,18 @@ document.addEventListener('DOMContentLoaded', () => {
     'ya lublu standoff',
     'Yoon bratochek',
   ];
-  let phraseIndex = 0;
-  let charIndex = 0;
-  let isDeleting = false;
-  let typeSpeed = 100;
-  let backSpeed = 50;
-  let backDelay = 2000; // Пауза перед удалением
 
-  function typeEffect() {
-    if (!textElement) return;
-
-    const currentPhrase = phrases[phraseIndex];
-
-    if (isDeleting) {
-      charIndex--;
-      textElement.textContent = currentPhrase.substring(0, charIndex);
-    } else {
-      charIndex++;
-      textElement.textContent = currentPhrase.substring(0, charIndex);
-    }
-
-    let delta = isDeleting ? backSpeed : typeSpeed;
-
-    if (!isDeleting && charIndex === currentPhrase.length) {
-      // Закончили печатать фразу
-      delta = backDelay; // Ждем перед удалением
-      isDeleting = true;
-    } else if (isDeleting && charIndex === 0) {
-      // Закончили удалять фразу
-      isDeleting = false;
-      phraseIndex = (phraseIndex + 1) % phrases.length;
-      delta = 500; // Пауза перед началом новой фразы
-    }
-
-    setTimeout(typeEffect, delta);
+  if (textElement) {
+    const fx = new TextScramble(textElement);
+    let counter = 0;
+    const next = () => {
+      fx.setText(phrases[counter]).then(() => {
+        setTimeout(next, 2500); // Пауза перед следующей фразой
+      });
+      counter = (counter + 1) % phrases.length;
+    };
+    next();
   }
-
-  // Запуск эффекта
-  typeEffect();
 
   // 4. Копирование ников (тегов) по клику
   document.querySelectorAll('.tag').forEach((tag) => {

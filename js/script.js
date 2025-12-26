@@ -262,33 +262,47 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-/* --- ЗАЩИТА ОТ КОПИРОВАНИЯ И ИНСПЕКТОРА --- */
-document.addEventListener('contextmenu', (event) => {
-  event.preventDefault(); // Блокируем меню правой кнопки мыши
+/* --- УСИЛЕННАЯ ЗАЩИТА ОТ КОПИРОВАНИЯ --- */
+
+// 1. Блокировка контекстного меню (ПКМ)
+document.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
 });
 
-document.addEventListener('keydown', (event) => {
-  // Блокируем F12
-  if (event.key === 'F12' || event.keyCode === 123) {
-    event.preventDefault();
+// 2. Агрессивная блокировка клавиш
+window.addEventListener('keydown', (e) => {
+  // F12
+  if (e.key === 'F12' || e.keyCode === 123) {
+    e.preventDefault();
+    e.stopPropagation();
     return false;
   }
 
-  // Блокируем комбинации Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C (DevTools)
-  if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'J' || event.key === 'C')) {
-    event.preventDefault();
-    return false;
+  // Комбинации с CTRL
+  if (e.ctrlKey) {
+    // Ctrl+U (Исходный код)
+    if (e.key === 'u' || e.key === 'U') {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+    // Ctrl+S (Сохранить)
+    if (e.key === 's' || e.key === 'S') {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+    // Ctrl+Shift+I/J/C (DevTools)
+    if (e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+    // Ctrl+P (Печать)
+    if (e.key === 'p' || e.key === 'P') {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
   }
-
-  // Блокируем Ctrl+U (Просмотр исходного кода)
-  if (event.ctrlKey && (event.key === 'U' || event.key === 'u')) {
-    event.preventDefault();
-    return false;
-  }
-
-  // Блокируем Ctrl+S (Сохранить страницу)
-  if (event.ctrlKey && (event.key === 'S' || event.key === 's')) {
-    event.preventDefault();
-    return false;
-  }
-});
+}, { capture: true }); // ВАЖНО: { capture: true } перехватывает событие раньше браузера

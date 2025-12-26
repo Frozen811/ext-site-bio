@@ -115,10 +115,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
+  const katakana = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ';
+  const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const nums = '0123456789';
+  const special = '@#$%^&*()_+-=[]{}|;:,.<>?';
+  const chars = katakana + latin + nums + special;
+
+  const specialWords = ['EXTR3ME', 'YOON'];
+
   const fontSize = 14;
   let columns;
   let drops = [];
+  let columnState = [];
 
   function resizeCanvas() {
     width = window.innerWidth;
@@ -127,13 +135,15 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.height = height;
 
     columns = Math.floor(width / fontSize);
-    // Re-initialize drops if needed, or just extend/truncate
-    // For simplicity, we can preserve existing drops and add new ones if width increases
+
     const newDrops = [];
+    const newColumnState = [];
     for (let i = 0; i < columns; i++) {
       newDrops[i] = drops[i] || Math.random() * -100;
+      newColumnState[i] = columnState[i] || { active: false, word: '', index: 0 };
     }
     drops = newDrops;
+    columnState = newColumnState;
   }
 
   window.addEventListener('resize', resizeCanvas);
@@ -147,11 +157,31 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.font = `${fontSize}px 'JetBrains Mono', monospace`;
 
     for (let i = 0; i < drops.length; i++) {
-      // Случайный символ
-      const text = chars[Math.floor(Math.random() * chars.length)];
+      let text;
+      let isSpecial = false;
 
-      // Цвет: темно-серый, иногда белый
-      const isWhite = Math.random() > 0.98;
+      // Логика для специальных слов (ников)
+      if (columnState[i] && columnState[i].active) {
+        text = columnState[i].word[columnState[i].index];
+        isSpecial = true;
+        columnState[i].index++;
+        if (columnState[i].index >= columnState[i].word.length) {
+          columnState[i].active = false;
+        }
+      } else if (Math.random() < 0.005) { // Шанс появления ника
+        const word = specialWords[Math.floor(Math.random() * specialWords.length)];
+        columnState[i].active = true;
+        columnState[i].word = word;
+        columnState[i].index = 0;
+        text = columnState[i].word[columnState[i].index];
+        isSpecial = true;
+        columnState[i].index++;
+      } else {
+        text = chars[Math.floor(Math.random() * chars.length)];
+      }
+
+      // Цвет: темно-серый, иногда белый. Ники всегда белые для заметности.
+      const isWhite = isSpecial || Math.random() > 0.98;
       ctx.fillStyle = isWhite ? '#ffffff' : '#444444';
 
       ctx.fillText(text, i * fontSize, drops[i] * fontSize);
@@ -159,6 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
       // Сброс капли или падение
       if (drops[i] * fontSize > height && Math.random() > 0.975) {
         drops[i] = 0;
+        // Сбрасываем состояние слова при ресете капли
+        if (columnState[i]) columnState[i].active = false;
       }
 
       drops[i]++;

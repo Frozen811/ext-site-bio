@@ -3,17 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Java Developer dossier. Skills, contacts, and info.">
+  <meta name="keywords" content="Java Developer, Python Developer, About EXTREME, Programming Skills">
+  <meta name="theme-color" content="#0a0a0a">
   <title>EXTREME | Обо мне</title>
 
+  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://extr3me.me/about.html">
   <meta property="og:title" content="EXTREME | About Me">
   <meta property="og:description" content="Java Developer dossier. Skills, contacts, and info.">
   <meta property="og:image" content="https://i.ibb.co/PsXzjWpN/photo-2025-12-25-13-31-57.jpg">
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Resource Hints for Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="dns-prefetch" href="https://i.ibb.co">
+
+  <!-- Optimized Font Loading -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet"></noscript>
+  
+  <!-- Preload Critical CSS -->
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 </head>
 <body>
 
@@ -53,13 +68,45 @@
 
     <div class="dossier-card">
       <div class="dossier-banner">
-        <img src="https://i.ibb.co/XrHdL6Ks/photo-2025-12-25-23-29-53.jpg" alt="Banner">
+        <picture>
+          <source 
+            media="(max-width: 768px)" 
+            srcset="https://i.ibb.co/XrHdL6Ks/photo-2025-12-25-23-29-53.jpg" 
+            width="768" 
+            height="180">
+          <source 
+            media="(max-width: 992px)" 
+            srcset="https://i.ibb.co/XrHdL6Ks/photo-2025-12-25-23-29-53.jpg" 
+            width="992" 
+            height="280">
+          <img 
+            src="https://i.ibb.co/XrHdL6Ks/photo-2025-12-25-23-29-53.jpg" 
+            alt="EXTREME Banner" 
+            loading="lazy" 
+            width="1000" 
+            height="350"
+            decoding="async">
+        </picture>
       </div>
 
       <div class="dossier-content-wrapper">
         <div class="dossier-sidebar">
           <div class="avatar-wrapper">
-            <img src="https://i.ibb.co/PsXzjWpN/photo-2025-12-25-13-31-57.jpg" alt="Avatar" class="avatar">
+            <picture>
+              <source 
+                media="(max-width: 768px)" 
+                srcset="https://i.ibb.co/PsXzjWpN/photo-2025-12-25-13-31-57.jpg" 
+                width="130" 
+                height="130">
+              <img 
+                src="https://i.ibb.co/PsXzjWpN/photo-2025-12-25-13-31-57.jpg" 
+                alt="EXTREME Avatar" 
+                class="avatar" 
+                loading="lazy" 
+                width="180" 
+                height="180"
+                decoding="async">
+            </picture>
           </div>
           <div class="tech-stack">
             <div class="tech-item"><i class="fab fa-java"></i> Java</div>
@@ -117,6 +164,6 @@
 
 <div id="scrollTopBtn" class="scroll-top"><i class="fas fa-arrow-up"></i></div>
 
-<script src="js/script.js"></script>
+<script src="js/script.js" defer></script>
 </body>
 </html>

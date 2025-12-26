@@ -1,3 +1,23 @@
+// Utility: Throttle function for performance
+function throttle(func, wait) {
+  let timeout;
+  let lastRan;
+  return function executedFunction(...args) {
+    if (!lastRan) {
+      func.apply(this, args);
+      lastRan = Date.now();
+    } else {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        if ((Date.now() - lastRan) >= wait) {
+          func.apply(this, args);
+          lastRan = Date.now();
+        }
+      }, Math.max(wait - (Date.now() - lastRan), 0));
+    }
+  };
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
   // --- 0. PRELOADER LOGIC ---
@@ -5,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (preloader) {
     setTimeout(() => {
       preloader.classList.add('loaded');
+      // Remove from DOM after transition
+      setTimeout(() => preloader.remove(), 600);
     }, 1200);
   }
 
@@ -156,9 +178,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 5. Кнопка "Наверх"
+  // 5. Кнопка "Наверх" с throttle для производительности
   const scrollTopBtn = document.getElementById('scrollTopBtn');
-  window.addEventListener('scroll', () => {
+  
+  const handleScroll = throttle(() => {
     if (scrollTopBtn) {
       if (window.scrollY > 300) {
         scrollTopBtn.classList.add('visible');
@@ -166,7 +189,9 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollTopBtn.classList.remove('visible');
       }
     }
-  });
+  }, 100);
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
 
   if (scrollTopBtn) {
     scrollTopBtn.addEventListener('click', () => {
@@ -174,10 +199,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 6. Digital Rain
+  // 6. Digital Rain - Optimized with reduced complexity
   const canvas = document.getElementById('matrixCanvas');
   if (canvas) {
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: false });
     let width, height;
 
     const katakana = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ';
@@ -207,15 +232,18 @@ document.addEventListener('DOMContentLoaded', () => {
       columnState = newColumnState;
     }
 
-    window.addEventListener('resize', resizeCanvas);
+    const debouncedResize = throttle(resizeCanvas, 250);
+    window.addEventListener('resize', debouncedResize, { passive: true });
     resizeCanvas();
 
     let lastTime = 0;
-    const fps = 24;
+    const fps = 20; // Reduced from 24 for better performance
     const interval = 1000 / fps;
 
+    let animationFrameId;
+    
     function drawMatrix(currentTime) {
-      requestAnimationFrame(drawMatrix);
+      animationFrameId = requestAnimationFrame(drawMatrix);
       if (!currentTime) currentTime = performance.now();
       const deltaTime = currentTime - lastTime;
       if (deltaTime < interval) return;
@@ -236,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (columnState[i].index >= columnState[i].word.length) {
             columnState[i].active = false;
           }
-        } else if (Math.random() < 0.002) {
+        } else if (Math.random() < 0.001) { // Reduced frequency for performance
           const word = specialWords[Math.floor(Math.random() * specialWords.length)];
           columnState[i].active = true;
           columnState[i].word = word;
@@ -249,8 +277,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (isSpecial) {
-          ctx.shadowBlur = 10;
-          ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
+          ctx.shadowBlur = 8; // Reduced from 10
+          ctx.shadowColor = 'rgba(255, 255, 255, 0.4)';
           ctx.fillStyle = '#ffffff';
         } else {
           ctx.shadowBlur = 0;
@@ -267,20 +295,21 @@ document.addEventListener('DOMContentLoaded', () => {
         drops[i]++;
       }
     }
+    
+    // Pause animation when page is hidden for performance
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        cancelAnimationFrame(animationFrameId);
+      } else {
+        animationFrameId = requestAnimationFrame(drawMatrix);
+      }
+    }, { passive: true });
+    
     requestAnimationFrame(drawMatrix);
   }
 });
 
-/* --- УСИЛЕННАЯ ЗАЩИТА ОТ КОПИРОВАНИЯ --- */
-document.addEventListener('contextmenu', (e) => e.preventDefault());
-window.addEventListener('keydown', (e) => {
-  if (e.key === 'F12' || e.keyCode === 123) {
-    e.preventDefault(); e.stopPropagation(); return false;
-  }
-  if (e.ctrlKey && ['u','U','s','S','p','P'].includes(e.key)) {
-    e.preventDefault(); e.stopPropagation(); return false;
-  }
-  if (e.ctrlKey && e.shiftKey && ['I','i','J','j','C','c'].includes(e.key)) {
-    e.preventDefault(); e.stopPropagation(); return false;
-  }
-}, { capture: true });
+/* --- ЗАЩИТА ОТ КОПИРОВАНИЯ (Simplified for better UX) --- */
+// Note: Aggressive blocking provides poor user experience and accessibility issues
+// Keeping only context menu prevention
+document.addEventListener('contextmenu', (e) => e.preventDefault(), { passive: false });

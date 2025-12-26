@@ -1,0 +1,28 @@
+{
+  "name": "extreme-portfolio",
+  "version": "1.0.0",
+  "description": "EXTREME Developer Portfolio with Matrix effects and optimized images",
+  "main": "index.html",
+  "scripts": {
+    "optimize:banner": "node optimize-images.js banner",
+    "optimize:avatar": "node optimize-images.js avatar",
+    "optimize:help": "node optimize-images.js"
+  },
+  "keywords": [
+    "portfolio",
+    "developer",
+    "matrix",
+    "responsive",
+    "optimized"
+  ],
+  "author": "Yoon",
+  "license": "MIT",
+  "devDependencies": {
+    "sharp": "^0.33.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/extreme-portfolio.git"
+  }
+}
+

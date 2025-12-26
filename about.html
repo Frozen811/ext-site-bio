@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>EXTREME | Обо мне</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<canvas id="matrixCanvas"></canvas>
+<div class="noise-bg"></div>
+
+<header>
+  <div class="container header-content">
+    <a href="index.html" class="logo">
+      EXTREME<span class="dot">.</span>
+    </a>
+
+    <div class="mobile-toggle" id="menuBtn">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+
+    <nav id="navMenu">
+      <ul>
+        <li><a href="index.html">Главная</a></li>
+        <li><a href="about.html">Обо мне</a></li>
+        <li><a href="contacts.html">Контакты</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section id="about" class="about-section">
+  <div class="container">
+    <h3 class="section-heading">ЛИЧНОЕ ДЕЛО</h3>
+
+    <div class="dossier-card">
+      <div class="dossier-banner">
+        <img src="https://i.ibb.co/XrHdL6Ks/photo-2025-12-25-23-29-53.jpg" alt="Banner">
+      </div>
+
+      <div class="dossier-content-wrapper">
+        <div class="dossier-sidebar">
+          <div class="avatar-wrapper">
+            <img src="https://i.ibb.co/PsXzjWpN/photo-2025-12-25-13-31-57.jpg" alt="Avatar" class="avatar">
+          </div>
+          <div class="tech-stack">
+            <div class="tech-item"><i class="fab fa-java"></i> Java</div>
+            <div class="tech-item"><i class="fab fa-python"></i> Python</div>
+          </div>
+        </div>
+
+        <div class="dossier-info">
+          <div class="names">
+            <h2 class="nick">EXTREME</h2>
+            <p class="aka">aka <span class="crossed">PERSONA</span></p>
+          </div>
+
+          <div class="data-grid">
+            <div class="data-item">
+              <span class="data-label"><i class="fas fa-map-marker-alt"></i> Location</span>
+              <span class="data-value">Poland, Warszawa</span>
+            </div>
+            <div class="data-item">
+              <span class="data-label"><i class="fas fa-birthday-cake"></i> Birthday</span>
+              <span class="data-value">19.10</span>
+            </div>
+          </div>
+
+          <blockquote class="quote">
+            "Кто не рискует, тот не пьёт шампанского."
+          </blockquote>
+
+          <div class="connections">
+            <span class="data-label">Connections (Click to copy):</span>
+            <div class="tags-list">
+              <span class="tag">@libkent</span>
+              <span class="tag">Tystop</span>
+              <span class="tag">@hosteanMVP</span>
+              <span class="tag">@oelinux</span>
+            </div>
+          </div>
+
+          <div class="status-box">
+            <i class="fas fa-info-circle"></i>
+            <span>Мирный статус. Не занимаюсь доксом/сватом.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-content">
+    <div class="footer-left">© 2025 EXTREME. All rights reserved.</div>
+    <div class="footer-right">Made by Yoon</div>
+  </div>
+</footer>
+
+<div id="scrollTopBtn" class="scroll-top"><i class="fas fa-arrow-up"></i></div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
+

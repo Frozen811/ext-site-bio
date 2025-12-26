@@ -22,8 +22,8 @@
   <link rel="dns-prefetch" href="https://i.ibb.co">
 
   <!-- Optimized Font Loading -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet"></noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"></noscript>
   
   <!-- Preload Critical CSS -->
   <link rel="stylesheet" href="css/style.css">
@@ -48,11 +48,11 @@
       EXTREME<span class="dot">.</span>
     </a>
 
-    <div class="mobile-toggle" id="menuBtn">
+    <button class="mobile-toggle" id="menuBtn" aria-label="Toggle navigation menu" aria-expanded="false">
       <div class="bar"></div>
       <div class="bar"></div>
       <div class="bar"></div>
-    </div>
+    </button>
 
     <nav id="navMenu">
       <ul>
@@ -62,21 +62,23 @@
   </div>
 </header>
 
+<main>
 <section id="contacts" class="contact-section">
   <div class="container">
-    <h3 class="section-heading reveal">СВЯЗЬ</h3>
+    <h1 class="section-heading reveal">СВЯЗЬ</h1>
     <div class="contact-links">
-      <a href="https://t.me/sby_extreme" target="_blank" class="contact-card reveal delay-1">
+      <a href="https://t.me/sby_extreme" target="_blank" rel="noopener noreferrer" class="contact-card reveal delay-1">
         <i class="fab fa-telegram-plane"></i>
         <span>Мои личные сообщения</span>
       </a>
-      <a href="https://t.me/extremesupportbot" target="_blank" class="contact-card reveal delay-2">
+      <a href="https://t.me/extremesupportbot" target="_blank" rel="noopener noreferrer" class="contact-card reveal delay-2">
         <i class="fas fa-robot"></i>
         <span>Бот для связи</span>
       </a>
     </div>
   </div>
 </section>
+</main>
 
 <footer>
   <div class="container footer-content">
@@ -85,7 +87,7 @@
   </div>
 </footer>
 
-<div id="scrollTopBtn" class="scroll-top"><i class="fas fa-arrow-up"></i></div>
+<button id="scrollTopBtn" class="scroll-top" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></button>
 
 <script src="js/script.js" defer></script>
 </body>

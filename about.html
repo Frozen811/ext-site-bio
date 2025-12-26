@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="description" content="Java Developer dossier. Skills, contacts, and info.">
-  <meta name="keywords" content="Java Developer, Python Developer, About EXTREME, Programming Skills">
+  <meta name="description" content="Professional profile and technical expertise of a Senior Java Developer.">
+  <meta name="keywords" content="Java Developer, Python Developer, Software Engineer, Backend Specialist, Technical Skills">
   <meta name="theme-color" content="#0a0a0a">
   <title>EXTREME | Обо мне</title>
 
@@ -12,7 +12,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://extr3me.me/about.html">
   <meta property="og:title" content="EXTREME | About Me">
-  <meta property="og:description" content="Java Developer dossier. Skills, contacts, and info.">
+  <meta property="og:description" content="Professional profile and technical expertise of a Senior Java Developer.">
   <meta property="og:image" content="https://i.ibb.co/PsXzjWpN/photo-2025-12-25-13-31-57.jpg">
 
   <!-- Resource Hints for Performance -->
@@ -22,8 +22,8 @@
   <link rel="dns-prefetch" href="https://i.ibb.co">
 
   <!-- Optimized Font Loading -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet"></noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"></noscript>
   
   <!-- Preload Critical CSS -->
   <link rel="stylesheet" href="css/style.css">
@@ -48,11 +48,11 @@
       EXTREME<span class="dot">.</span>
     </a>
 
-    <div class="mobile-toggle" id="menuBtn">
+    <button class="mobile-toggle" id="menuBtn" aria-label="Toggle navigation menu" aria-expanded="false">
       <div class="bar"></div>
       <div class="bar"></div>
       <div class="bar"></div>
-    </div>
+    </button>
 
     <nav id="navMenu">
       <ul>
@@ -62,11 +62,12 @@
   </div>
 </header>
 
+<main>
 <section id="about" class="about-section">
   <div class="container">
-    <h3 class="section-heading reveal">ЛИЧНОЕ ДЕЛО</h3>
+    <h1 class="section-heading reveal">ЛИЧНОЕ ДЕЛО</h1>
 
-    <div class="dossier-card reveal delay-1">
+    <article class="dossier-card reveal delay-1">
       <div class="dossier-banner">
         <picture>
           <source 
@@ -151,9 +152,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </article>
   </div>
 </section>
+</main>
 
 <footer>
   <div class="container footer-content">
@@ -162,7 +164,7 @@
   </div>
 </footer>
 
-<div id="scrollTopBtn" class="scroll-top"><i class="fas fa-arrow-up"></i></div>
+<button id="scrollTopBtn" class="scroll-top" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></button>
 
 <script src="js/script.js" defer></script>
 </body>

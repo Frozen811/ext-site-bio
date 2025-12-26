@@ -20,13 +20,7 @@ function throttle(func, wait) {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // --- 0. PAGE TRANSITION (FADE-IN ON LOAD) ---
-  document.body.style.opacity = '0';
-  setTimeout(() => {
-    document.body.style.opacity = '1';
-  }, 100);
-
-  // --- 0.1. PRELOADER LOGIC ---
+  // --- 0. PRELOADER LOGIC ---
   const preloader = document.getElementById('preloader');
   if (preloader) {
     setTimeout(() => {
@@ -36,23 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1200);
   }
 
-  // --- НОВАЯ ФИЧА: Печатная машинка для EXTREME ---
-  const mainTitle = document.querySelector('.main-title');
-  if (mainTitle) {
-    const textToType = "EXTREME";
-    mainTitle.textContent = ""; // Очищаем текст перед печатью
+  // --- 0.1. PAGE TRANSITION (FADE-IN ON LOAD) ---
+  // Ensure body starts with opacity 0 (set in CSS), then fade in
+  setTimeout(() => {
+    document.body.style.transition = 'opacity 0.3s ease-out';
+    document.body.style.opacity = '1';
+  }, 50);
 
-    let charIndex = 0;
-    function typeMainTitle() {
-      if (charIndex < textToType.length) {
-        mainTitle.textContent += textToType.charAt(charIndex);
-        charIndex++;
-        setTimeout(typeMainTitle, 200); // Скорость печати (200мс)
-      }
-    }
-    // Запускаем печать через 1.5 секунды (после прелоадера)
-    setTimeout(typeMainTitle, 1500);
-  }
+  // Заголовок отображается статично для профессионального вида
 
   // 1. Мобильное меню
   const menuBtn = document.getElementById('menuBtn');
@@ -61,14 +46,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (menuBtn && navMenu) {
     menuBtn.addEventListener('click', () => {
-      menuBtn.classList.toggle('active');
+      const isActive = menuBtn.classList.toggle('active');
       navMenu.classList.toggle('active');
+      // Update aria-expanded for accessibility
+      menuBtn.setAttribute('aria-expanded', isActive.toString());
     });
 
     navLinks.forEach((link) => {
       link.addEventListener('click', () => {
         menuBtn.classList.remove('active');
         navMenu.classList.remove('active');
+        menuBtn.setAttribute('aria-expanded', 'false');
       });
     });
   }
@@ -89,88 +77,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 3. Эффект декодера (для подзаголовка Java Developer...)
-  class TextScramble {
-    constructor(el) {
-      this.el = el;
-      this.chars = '!<>-_\\/[]{}—=+*^?#';
-      this.update = this.update.bind(this);
-    }
-
-    setText(newText) {
-      const oldText = this.el.innerText;
-      const length = Math.max(oldText.length, newText.length);
-      const promise = new Promise((resolve) => (this.resolve = resolve));
-
-      this.queue = [];
-      for (let i = 0; i < length; i++) {
-        const from = oldText[i] || '';
-        const to = newText[i] || '';
-        const start = Math.floor(Math.random() * 15) + (i * 4);
-        const end = start + Math.floor(Math.random() * 20) + 20;
-        this.queue.push({ from, to, start, end });
-      }
-
-      cancelAnimationFrame(this.frameRequest);
-      this.frame = 0;
-      this.update();
-      return promise;
-    }
-
-    update() {
-      let output = '';
-      let complete = 0;
-      for (let i = 0, n = this.queue.length; i < n; i++) {
-        let { from, to, start, end, char } = this.queue[i];
-
-        if (this.frame >= end) {
-          complete++;
-          output += to;
-        } else if (this.frame >= start) {
-          if (!char || Math.random() < 0.2) {
-            char = this.randomChar();
-            this.queue[i].char = char;
-          }
-          output += `<span style="color: #444444;">${char}</span>`;
-        } else {
-          output += from;
-        }
-      }
-
-      this.el.innerHTML = output;
-
-      if (complete === this.queue.length) {
-        this.resolve();
-      } else {
-        this.frameRequest = requestAnimationFrame(this.update);
-        this.frame++;
-      }
-    }
-
-    randomChar() {
-      return this.chars[Math.floor(Math.random() * this.chars.length)];
-    }
-  }
-
+  // 3. Простая смена текста (профессиональный стиль)
   const textElement = document.querySelector('.typing-text');
   const phrases = [
     'Java Developer',
     'Python Developer',
-    'ya lublu standoff',
-    'Yoon bratochek',
+    'Software Engineer',
+    'Backend Specialist',
   ];
 
   if (textElement) {
-    const fx = new TextScramble(textElement);
     let counter = 0;
-    const next = () => {
-      fx.setText(phrases[counter]).then(() => {
-        setTimeout(next, 3000);
-      });
-      counter = (counter + 1) % phrases.length;
-    };
-    // Запускаем чуть позже, после заголовка
-    setTimeout(next, 2500);
+    function changeText() {
+      textElement.style.opacity = '0';
+      setTimeout(() => {
+        textElement.textContent = phrases[counter];
+        textElement.style.opacity = '1';
+        counter = (counter + 1) % phrases.length;
+      }, 300);
+    }
+    // Устанавливаем начальный текст
+    textElement.textContent = phrases[0];
+    textElement.style.transition = 'opacity 0.3s ease';
+    // Меняем текст каждые 3 секунды
+    setInterval(changeText, 3000);
   }
 
   // 4. Копирование ников
@@ -316,6 +246,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- 7. PAGE TRANSITIONS (SMOOTH NAVIGATION) ---
   // Intercept all internal links for smooth page transitions
+  let isNavigating = false; // Prevent multiple simultaneous navigations
+  
   document.querySelectorAll('a[href]').forEach(link => {
     // Skip anchor links (starting with #)
     const href = link.getAttribute('href');
@@ -324,6 +256,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     link.addEventListener('click', (e) => {
+      // Prevent race condition - only one navigation at a time
+      if (isNavigating) {
+        e.preventDefault();
+        return;
+      }
+
       // Check if it's an internal link (same origin or relative)
       const isInternal = href.startsWith('/') || 
                         href.startsWith('./') || 
@@ -333,6 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (isInternal) {
         e.preventDefault();
+        isNavigating = true;
         
         // Add transitioning class to trigger fade-out
         document.body.classList.add('page-transitioning');

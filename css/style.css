@@ -32,6 +32,13 @@ body {
     -ms-user-select: none;
     user-select: none;
     text-rendering: optimizeSpeed;
+    opacity: 1;
+    transition: opacity 0.3s ease-out;
+}
+
+/* Page Transition States */
+body.page-transitioning {
+    opacity: 0;
 }
 
 a { text-decoration: none; color: inherit; transition: 0.3s; }
@@ -178,14 +185,30 @@ nav a:hover::after { width: 100%; }
 .hero-btns { display: flex; gap: 20px; justify-content: center; }
 .btn {
     padding: 15px 35px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
-    border-radius: 4px; transition: all 0.3s ease; font-size: 14px; cursor: pointer;
+    border-radius: 4px; transition: all 0.2s ease-out; font-size: 14px; cursor: pointer;
     font-family: var(--font-mono);
-    will-change: background-color, color, border-color;
+    will-change: background-color, color, border-color, transform;
 }
 .btn-filled { background: var(--accent); color: var(--bg-main); border: 1px solid var(--accent); }
-.btn-filled:hover { background: transparent; color: var(--accent); }
+.btn-filled:hover { 
+    background: transparent; 
+    color: var(--accent);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+.btn-filled:active {
+    transform: scale(0.98);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
 .btn-outline { background: transparent; color: var(--accent); border: 1px solid var(--border-color); }
-.btn-outline:hover { border-color: var(--accent); background: rgba(255,255,255,0.05); }
+.btn-outline:hover { 
+    border-color: var(--accent); 
+    background: rgba(255,255,255,0.05);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+}
+.btn-outline:active {
+    transform: scale(0.98);
+    background: rgba(255,255,255,0.02);
+}
 
 /* --- SECTIONS --- */
 section { padding: 80px 0; }
@@ -208,6 +231,12 @@ section { padding: 80px 0; }
     overflow: hidden;
     max-width: 1000px;
     margin: 0 auto;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    will-change: transform;
+}
+.dossier-card:active {
+    transform: scale(0.98);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
 }
 
 .dossier-banner { 
@@ -299,13 +328,22 @@ section { padding: 80px 0; }
 .contact-links { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
 .contact-card {
     background: var(--bg-secondary); border: 1px solid var(--border-color);
-    padding: 30px 60px; border-radius: 4px; display: flex; flex-direction: column; align-items: center; gap: 15px; transition: all 0.3s ease;
-    will-change: background-color, border-color;
+    padding: 30px 60px; border-radius: 4px; display: flex; flex-direction: column; align-items: center; gap: 15px; 
+    transition: all 0.2s ease-out;
+    will-change: background-color, border-color, transform;
 }
-.contact-card i { font-size: 32px; color: var(--text-secondary); transition: color 0.3s ease; }
-.contact-card span { font-family: var(--font-mono); font-size: 14px; transition: color 0.3s ease; }
-.contact-card:hover { border-color: var(--accent); background: var(--accent); }
+.contact-card i { font-size: 32px; color: var(--text-secondary); transition: color 0.2s ease-out; }
+.contact-card span { font-family: var(--font-mono); font-size: 14px; transition: color 0.2s ease-out; }
+.contact-card:hover { 
+    border-color: var(--accent); 
+    background: var(--accent);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.25);
+}
 .contact-card:hover i, .contact-card:hover span { color: var(--bg-main); }
+.contact-card:active {
+    transform: scale(0.98);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+}
 
 /* --- BUTTON UP --- */
 .scroll-top {
@@ -478,4 +516,50 @@ img {
 @media (min-width: 1200px) {
     .dossier-banner { max-height: 400px; }
     .dossier-card { max-width: 1100px; }
+}
+
+/* --- SCROLL REVEAL ANIMATIONS --- */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    will-change: opacity, transform;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Delay variations for staggered effect */
+.reveal.delay-1 { transition-delay: 0.1s; }
+.reveal.delay-2 { transition-delay: 0.2s; }
+.reveal.delay-3 { transition-delay: 0.3s; }
+.reveal.delay-4 { transition-delay: 0.4s; }
+
+/* Enhanced hover effects for links */
+nav a {
+    font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); font-weight: 600;
+    position: relative;
+    transition: all 0.2s ease-out;
+}
+
+/* Tactical feedback for all interactive elements */
+a:active:not(.btn):not(.contact-card) {
+    transform: scale(0.98);
+}
+
+.tech-item {
+    background: var(--bg-main); border: 1px solid var(--border-color);
+    padding: 12px; font-family: var(--font-mono); font-size: 14px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    transition: all 0.2s ease-out;
+    will-change: border-color, transform;
+}
+.tech-item:hover { 
+    border-color: var(--accent);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+.tech-item:active {
+    transform: scale(0.98);
 }

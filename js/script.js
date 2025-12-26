@@ -20,7 +20,13 @@ function throttle(func, wait) {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // --- 0. PRELOADER LOGIC ---
+  // --- 0. PAGE TRANSITION (FADE-IN ON LOAD) ---
+  document.body.style.opacity = '0';
+  setTimeout(() => {
+    document.body.style.opacity = '1';
+  }, 100);
+
+  // --- 0.1. PRELOADER LOGIC ---
   const preloader = document.getElementById('preloader');
   if (preloader) {
     setTimeout(() => {
@@ -307,6 +313,58 @@ document.addEventListener('DOMContentLoaded', () => {
     
     requestAnimationFrame(drawMatrix);
   }
+
+  // --- 7. PAGE TRANSITIONS (SMOOTH NAVIGATION) ---
+  // Intercept all internal links for smooth page transitions
+  document.querySelectorAll('a[href]').forEach(link => {
+    // Skip anchor links (starting with #)
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || link.target === '_blank') {
+      return;
+    }
+
+    link.addEventListener('click', (e) => {
+      // Check if it's an internal link (same origin or relative)
+      const isInternal = href.startsWith('/') || 
+                        href.startsWith('./') || 
+                        href.startsWith('../') ||
+                        href.includes(window.location.hostname) ||
+                        !href.includes('://');
+
+      if (isInternal) {
+        e.preventDefault();
+        
+        // Add transitioning class to trigger fade-out
+        document.body.classList.add('page-transitioning');
+        
+        // Wait for fade-out animation, then navigate
+        setTimeout(() => {
+          window.location.href = href;
+        }, 300);
+      }
+    });
+  });
+
+  // --- 8. SCROLL REVEAL ANIMATION (IntersectionObserver) ---
+  const revealElements = document.querySelectorAll('.reveal');
+  
+  if (revealElements.length > 0) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          // Optionally unobserve after reveal for performance
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.15, // Trigger when 15% of element is visible
+      rootMargin: '0px 0px -50px 0px' // Slight offset from bottom
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+  }
+
 });
 
 /* --- ЗАЩИТА ОТ КОПИРОВАНИЯ (Simplified for better UX) --- */

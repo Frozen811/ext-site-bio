@@ -513,10 +513,11 @@ section { padding: 80px 0; }
     border-color: var(--text-primary);
 }
 .rule-icon {
-    font-size: 16px;
+    font-size: 14px;
     color: var(--text-primary);
     flex-shrink: 0;
-    font-weight: 700;
+    width: 20px;
+    text-align: center;
 }
 
 .status-box { 

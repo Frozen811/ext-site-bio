@@ -75,10 +75,36 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 3. Статичный подзаголовок (минимализм)
+  // 3. Смена текста в подзаголовке (листинг профессий)
   const textElement = document.querySelector('.typing-text');
+  const phrases = [
+    'Java Developer',
+    'Python Developer',
+    'Crmp&Samp Developer',
+    'I Use Arch Btw'
+  ];
+
   if (textElement) {
-    textElement.textContent = 'Java Developer';
+    let counter = 0;
+    
+    // Устанавливаем начальный текст
+    textElement.textContent = phrases[0];
+    textElement.style.transition = 'opacity 0.4s ease';
+    
+    function changeText() {
+      // Плавное исчезновение
+      textElement.style.opacity = '0';
+      
+      setTimeout(() => {
+        counter = (counter + 1) % phrases.length;
+        textElement.textContent = phrases[counter];
+        // Плавное появление
+        textElement.style.opacity = '1';
+      }, 400);
+    }
+    
+    // Меняем текст каждые 3 секунды
+    setInterval(changeText, 3000);
   }
 
   // 4. Копирование ников

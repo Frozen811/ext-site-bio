@@ -130,7 +130,14 @@ nav a:hover::after { width: 100%; }
 .hero-text { max-width: 800px; text-align: center; }
 .hero-visual { display: none; }
 
-.greeting { color: var(--text-secondary); font-family: var(--font-mono); margin-bottom: 15px; }
+.greeting { 
+    color: var(--text-secondary); 
+    font-family: var(--font-mono); 
+    margin-bottom: 15px;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
 
 /* --- ГЛАВНЫЙ ЗАГОЛОВОК (ЧИСТЫЙ И ЧЕТКИЙ) --- */
 .main-title {
@@ -141,6 +148,19 @@ nav a:hover::after { width: 100%; }
     margin-bottom: 20px;
     color: var(--text-primary);
     display: inline-block;
+    letter-spacing: 4px;
+    position: relative;
+}
+/* Тонкая декоративная линия сверху */
+.main-title::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: var(--text-primary);
 }
 
 /* Курсор удален для чистоты дизайна */
@@ -152,18 +172,49 @@ nav a:hover::after { width: 100%; }
     color: var(--text-secondary);
     margin-bottom: 30px;
     min-height: 40px;
-    font-family: var(--font-body);
+    font-family: var(--font-mono);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .typing-text {
     display: inline-block;
+    position: relative;
+}
+/* Добавляем тонкую анимированную линию под текстом */
+.typing-text::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--text-secondary), transparent);
+    animation: shimmer 2s ease-in-out infinite;
 }
 
-.description { color: var(--text-secondary); margin-bottom: 40px; font-size: 18px; max-width: 600px; margin-left: auto; margin-right: auto; }
+@keyframes shimmer {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
 
-.hero-btns { display: flex; gap: 20px; justify-content: center; }
+.description { 
+    color: var(--text-secondary); 
+    margin-bottom: 40px; 
+    font-size: 18px; 
+    max-width: 600px; 
+    margin-left: auto; 
+    margin-right: auto;
+    line-height: 1.6;
+    padding: 0 20px;
+}
+
+.hero-btns { 
+    display: flex; 
+    gap: 20px; 
+    justify-content: center;
+    margin-top: 50px;
+}
 .btn {
     padding: 15px 35px; 
     font-weight: 600; 
@@ -462,8 +513,26 @@ section { padding: 80px 0; }
 }
 
 /* --- FOOTER --- */
-footer { padding: 40px 0; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary); font-size: 13px; font-family: var(--font-mono); }
-.footer-content { display: flex; justify-content: space-between; }
+footer { 
+    padding: 40px 0; 
+    border-top: 1px solid var(--border-color); 
+    text-align: center; 
+    color: var(--text-secondary); 
+    font-size: 13px; 
+    font-family: var(--font-mono);
+    margin-top: 80px;
+}
+.footer-content { 
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+}
+.footer-left, .footer-right {
+    transition: color 0.3s ease;
+}
+.footer-left:hover, .footer-right:hover {
+    color: var(--text-primary);
+}
 
 /* --- MOBILE ADAPTATION --- */
 .mobile-toggle { 

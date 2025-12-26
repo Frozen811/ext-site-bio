@@ -3,10 +3,27 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- 0. PRELOADER LOGIC ---
   const preloader = document.getElementById('preloader');
   if (preloader) {
-    // Ждем 1.2 секунды (пока полоска добежит) и убираем экран
     setTimeout(() => {
       preloader.classList.add('loaded');
     }, 1200);
+  }
+
+  // --- НОВАЯ ФИЧА: Печатная машинка для EXTREME ---
+  const mainTitle = document.querySelector('.main-title');
+  if (mainTitle) {
+    const textToType = "EXTREME";
+    mainTitle.textContent = ""; // Очищаем текст перед печатью
+
+    let charIndex = 0;
+    function typeMainTitle() {
+      if (charIndex < textToType.length) {
+        mainTitle.textContent += textToType.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeMainTitle, 200); // Скорость печати (200мс)
+      }
+    }
+    // Запускаем печать через 1.5 секунды (после прелоадера)
+    setTimeout(typeMainTitle, 1500);
   }
 
   // 1. Мобильное меню
@@ -44,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 3. Эффект декодера (Волна слева направо)
+  // 3. Эффект декодера (для подзаголовка Java Developer...)
   class TextScramble {
     constructor(el) {
       this.el = el;
@@ -61,11 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
       for (let i = 0; i < length; i++) {
         const from = oldText[i] || '';
         const to = newText[i] || '';
-
-        // Задержка создает волну
         const start = Math.floor(Math.random() * 15) + (i * 4);
         const end = start + Math.floor(Math.random() * 20) + 20;
-
         this.queue.push({ from, to, start, end });
       }
 
@@ -127,8 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       counter = (counter + 1) % phrases.length;
     };
-    // Запускаем чуть позже, чтобы прелоадер исчез
-    setTimeout(next, 1500);
+    // Запускаем чуть позже, после заголовка
+    setTimeout(next, 2500);
   }
 
   // 4. Копирование ников

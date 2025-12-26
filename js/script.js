@@ -261,3 +261,34 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(drawMatrix);
   }
 });
+
+/* --- ЗАЩИТА ОТ КОПИРОВАНИЯ И ИНСПЕКТОРА --- */
+document.addEventListener('contextmenu', (event) => {
+  event.preventDefault(); // Блокируем меню правой кнопки мыши
+});
+
+document.addEventListener('keydown', (event) => {
+  // Блокируем F12
+  if (event.key === 'F12' || event.keyCode === 123) {
+    event.preventDefault();
+    return false;
+  }
+
+  // Блокируем комбинации Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C (DevTools)
+  if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'J' || event.key === 'C')) {
+    event.preventDefault();
+    return false;
+  }
+
+  // Блокируем Ctrl+U (Просмотр исходного кода)
+  if (event.ctrlKey && (event.key === 'U' || event.key === 'u')) {
+    event.preventDefault();
+    return false;
+  }
+
+  // Блокируем Ctrl+S (Сохранить страницу)
+  if (event.ctrlKey && (event.key === 'S' || event.key === 's')) {
+    event.preventDefault();
+    return false;
+  }
+});

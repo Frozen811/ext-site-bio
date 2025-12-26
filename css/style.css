@@ -268,3 +268,28 @@ footer { padding: 40px 0; border-top: 1px solid var(--border-color); text-align:
     .avatar-wrapper { width: 130px !important; height: 130px !important; top: -65px !important; margin-bottom: -40px !important; }
     .dossier-content-wrapper { padding: 20px !important; margin-top: -10px; }
 }
+
+/* --- ЗАЩИТА ОТ КОПИРОВАНИЯ --- */
+body {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE10+/Edge */
+    user-select: none;         /* Standard */
+}
+
+/* Разрешаем выделять текст только в инпутах (если они будут), чтобы можно было писать */
+input, textarea {
+    -webkit-user-select: auto;
+    -moz-user-select: auto;
+    -ms-user-select: auto;
+    user-select: auto;
+}
+
+/* Запрещаем перетаскивание картинок (чтобы не утащили логотип на рабочий стол) */
+img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    pointer-events: none; /* Отключает клики по картинкам вообще */
+}

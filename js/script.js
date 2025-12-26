@@ -149,7 +149,20 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', resizeCanvas);
   resizeCanvas();
 
-  function drawMatrix() {
+  let lastTime = 0;
+  const fps = 20; // Ограничение кадров в секунду для замедления
+  const interval = 1000 / fps;
+
+  function drawMatrix(currentTime) {
+    requestAnimationFrame(drawMatrix);
+
+    if (!currentTime) currentTime = performance.now();
+    const deltaTime = currentTime - lastTime;
+
+    if (deltaTime < interval) return;
+
+    lastTime = currentTime - (deltaTime % interval);
+
     // Полупрозрачный черный фон для следа
     ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
     ctx.fillRect(0, 0, width, height);
@@ -180,9 +193,17 @@ document.addEventListener('DOMContentLoaded', () => {
         text = chars[Math.floor(Math.random() * chars.length)];
       }
 
-      // Цвет: темно-серый, иногда белый. Ники всегда белые для заметности.
-      const isWhite = isSpecial || Math.random() > 0.98;
-      ctx.fillStyle = isWhite ? '#ffffff' : '#444444';
+      // Цвет и эффекты
+      if (isSpecial) {
+        ctx.shadowBlur = 15; // Свечение
+        ctx.shadowColor = '#ffffff';
+        ctx.fillStyle = '#ffffff';
+      } else {
+        ctx.shadowBlur = 0;
+        ctx.shadowColor = 'transparent';
+        const isWhite = Math.random() > 0.98;
+        ctx.fillStyle = isWhite ? '#ffffff' : '#444444';
+      }
 
       ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
@@ -195,9 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       drops[i]++;
     }
-
-    requestAnimationFrame(drawMatrix);
   }
 
-  drawMatrix();
+  requestAnimationFrame(drawMatrix);
 });
